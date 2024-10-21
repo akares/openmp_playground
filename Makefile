@@ -4,8 +4,8 @@
 
 CC          = gcc-14
 CLINKER     = $(CC)
-# OPTFLAGS    = -O3 -fopenmp -Wall -Wextra
-OPTFLAGS    = -fopenmp -Wall -Wextra -g
+# OPTFLAGS    = -O3 -fopenmp -pedantic -Wall -Wextra
+OPTFLAGS    = -fopenmp -pedantic -Wall -Wextra -g
 LIBS        = -lm
 PRE         = ./
 
@@ -17,15 +17,23 @@ RM=rm -f
 
 # Build targets
 
-EXES=hello$(EXE)
+EXES=hello$(EXE) pi$(EXE) pi_par$(EXE)
 
 all: $(EXES)
 
 hello$(EXE): hello.$(OBJ)
 	$(CLINKER) $(OPTFLAGS) -o hello$(EXE) hello.$(OBJ) $(LIBS)
 
+pi$(EXE): pi.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o pi$(EXE) pi.$(OBJ) $(LIBS)
+
+pi_par$(EXE): pi_par.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o pi_par$(EXE) pi_par.$(OBJ) $(LIBS)
+
 test: $(EXES)
-	$(PRE)hello$(EXE)
+	# $(PRE)hello$(EXE)
+	# $(PRE)pi$(EXE)
+	$(PRE)pi_par$(EXE)
 
 clean:
 	$(RM) $(EXES) *.$(OBJ)
