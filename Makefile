@@ -4,7 +4,8 @@
 
 CC          = gcc-14
 CLINKER     = $(CC)
-OPTFLAGS    = -O3 -fopenmp
+# OPTFLAGS    = -O3 -fopenmp -Wall -Wextra
+OPTFLAGS    = -fopenmp -Wall -Wextra -g
 LIBS        = -lm
 PRE         = ./
 
