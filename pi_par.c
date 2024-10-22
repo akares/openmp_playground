@@ -36,6 +36,10 @@ double calc_pi_chunk(int chunk_num, long num_chunks, long num_steps, double step
 
 int main()
 {
+    printf("-----------------------------------------\n");
+    printf("%s\n", __FILE__);
+    printf("-----------------------------------------\n");
+
     const int MAX_THREADS = 8;
     const long NUM_STEPS = 100000000;
     const double STEP_SIZE = 1.0 / (double)NUM_STEPS;

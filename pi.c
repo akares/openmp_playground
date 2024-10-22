@@ -11,28 +11,29 @@ This is the serial version of the program.
 #include <stdio.h>
 #include <omp.h>
 
-const long num_steps = 100000000;
-
 int main()
 {
-    int i;
+    printf("-----------------------------------------\n");
+    printf("%s\n", __FILE__);
+    printf("-----------------------------------------\n");
+
+    const long NUM_STEPS = 100000000;
+    const double STEP_SIZE = 1.0 / (double)NUM_STEPS;
+
     double x, pi, sum = 0.0;
-    double start_time, run_time;
 
-    double step = 1.0 / (double)num_steps;
+    double start_time = omp_get_wtime();
 
-    start_time = omp_get_wtime();
-
-    for (i = 1; i <= num_steps; i++)
+    for (int i = 1; i <= NUM_STEPS; i++)
     {
-        x = (i - 0.5) * step;
+        x = (i - 0.5) * STEP_SIZE;
         sum = sum + 4.0 / (1.0 + x * x);
     }
 
-    pi = step * sum;
+    pi = STEP_SIZE * sum;
 
-    run_time = omp_get_wtime() - start_time;
-    printf("pi with %ld steps is %lf in %lf seconds\n", num_steps, pi, run_time);
+    double run_time = omp_get_wtime() - start_time;
+    printf("pi with %ld steps is %lf in %lf seconds\n", NUM_STEPS, pi, run_time);
 
     return 0;
 }

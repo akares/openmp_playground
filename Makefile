@@ -17,7 +17,7 @@ RM=rm -f
 
 # Build targets
 
-EXES=hello$(EXE) pi$(EXE) pi_par$(EXE)
+EXES=hello$(EXE) pi$(EXE) pi_par$(EXE) pi_par_loop$(EXE)
 
 all: $(EXES)
 
@@ -30,10 +30,14 @@ pi$(EXE): pi.$(OBJ)
 pi_par$(EXE): pi_par.$(OBJ)
 	$(CLINKER) $(OPTFLAGS) -o pi_par$(EXE) pi_par.$(OBJ) $(LIBS)
 
+pi_par_loop$(EXE): pi_par_loop.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o pi_par_loop$(EXE) pi_par_loop.$(OBJ) $(LIBS)
+
 test: $(EXES)
-	# $(PRE)hello$(EXE)
-	# $(PRE)pi$(EXE)
-	$(PRE)pi_par$(EXE)
+	@$(PRE)hello$(EXE)
+	@$(PRE)pi$(EXE)
+	@$(PRE)pi_par$(EXE)
+	@$(PRE)pi_par_loop$(EXE)
 
 clean:
 	$(RM) $(EXES) *.$(OBJ)
