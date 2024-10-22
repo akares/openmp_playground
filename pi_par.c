@@ -12,9 +12,9 @@ Used the parallel pragma to fork a team of threads to compute the integral.
 #include <stdio.h>
 #include <omp.h>
 
-double calc_pi_chunk(int chunk_num, long num_chunks, long num_steps, double step)
+double calc_pi_chunk(int chunk_num, long num_chunks, long num_steps, double step_size)
 {
-    double sum = 0.0;
+    double partial_sum = 0.0;
     double x = 0.0;
 
     // The approach is called "Cyclic distribution of the loop iterations".
@@ -27,19 +27,18 @@ double calc_pi_chunk(int chunk_num, long num_chunks, long num_steps, double step
 
     for (int i = chunk_num; i <= num_steps; i += num_chunks)
     {
-        x = (i - 0.5) * step;
-        sum = sum + 4.0 / (1.0 + x * x);
+        x = (i - 0.5) * step_size;
+        partial_sum += 4.0 / (1.0 + x * x);
     }
 
-    return step * sum;
+    return step_size * partial_sum;
 }
 
 int main()
 {
     const int MAX_THREADS = 8;
     const long NUM_STEPS = 100000000;
-
-    double step = 1.0 / (double)NUM_STEPS;
+    const double STEP_SIZE = 1.0 / (double)NUM_STEPS;
 
     for (int num_threads = 1; num_threads <= MAX_THREADS; num_threads++)
     {
@@ -52,7 +51,14 @@ int main()
         {
             const int chunk_num = omp_get_thread_num();
             const int num_chunks = omp_get_num_threads();
-            pi += calc_pi_chunk(chunk_num, num_chunks, NUM_STEPS, step);
+
+#pragma omp single
+            printf("Running on %d threads\n", num_threads);
+
+            double pi_chunk = calc_pi_chunk(chunk_num, num_chunks, NUM_STEPS, STEP_SIZE);
+
+#pragma omp atomic
+            pi += pi_chunk;
         }
 
         double run_time = omp_get_wtime() - start_time;

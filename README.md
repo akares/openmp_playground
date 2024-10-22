@@ -2,7 +2,7 @@ This repository contains reference examples of **OpenMP** API specification for 
 
 ### Contents
 
-[pi_par.c](pi_par.c) — basic usage of `parallel` pragma. Forks few worker threads and aggregates the final result.
+[pi_par.c](pi_par.c) — basic usage of `parallel` pragma, `single` construct and `atomic` sync primitive. Forks a few worker threads and aggregates the final result in a thread safe way.
 
 ...TBA
 
