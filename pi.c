@@ -1,3 +1,13 @@
+/*
+
+Numerically compute the integral of 4/(1+x*x) from 0 to 1.
+
+The value of this integral is Pi.
+
+This is the serial version of the program.
+
+*/
+
 #include <stdio.h>
 #include <omp.h>
 

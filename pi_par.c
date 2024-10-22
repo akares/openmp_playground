@@ -1,3 +1,14 @@
+/*
+
+Numerically compute the integral of 4/(1+x*x) from 0 to 1.
+
+The value of this integral is Pi.
+
+The program was parallelized using OpenMP.
+Used the parallel pragma to fork a team of threads to compute the integral.
+
+*/
+
 #include <stdio.h>
 #include <omp.h>
 
@@ -5,6 +16,14 @@ double calc_pi_chunk(int chunk_num, long num_chunks, long num_steps, double step
 {
     double sum = 0.0;
     double x = 0.0;
+
+    // The approach is called "Cyclic distribution of the loop iterations".
+    //
+    // The first thread will calculate the sum for the 1st, num_chunks+1st, num_chunks*2+1st, etc. steps.
+    // The second thread will calculate the sum for the 2nd, num_chunks+2nd, num_chunks*2+2nd, etc. steps.
+    // And so on.
+    //
+    // The chunk_num is simply the thread number and num_chunks is the total number of threads.
 
     for (int i = chunk_num; i <= num_steps; i += num_chunks)
     {
