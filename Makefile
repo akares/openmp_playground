@@ -17,7 +17,7 @@ RM=rm -f
 
 # Build targets
 
-EXES=hello$(EXE) pi$(EXE) pi_par$(EXE) pi_par_loop$(EXE) utilise_cores$(EXE)
+EXES=hello$(EXE) pi$(EXE) pi_par$(EXE) pi_par_loop$(EXE) sharing$(EXE) utilise_cores$(EXE)
 
 all: $(EXES)
 
@@ -33,6 +33,9 @@ pi_par$(EXE): pi_par.$(OBJ)
 pi_par_loop$(EXE): pi_par_loop.$(OBJ)
 	$(CLINKER) $(OPTFLAGS) -o pi_par_loop$(EXE) pi_par_loop.$(OBJ) $(LIBS)
 
+sharing$(EXE): sharing.$(OBJ)
+	$(CLINKER) $(OPTFLAGS) -o sharing$(EXE) sharing.$(OBJ) $(LIBS)
+
 utilise_cores$(EXE): utilise_cores.$(OBJ)
 	$(CLINKER) $(OPTFLAGS) -o utilise_cores$(EXE) utilise_cores.$(OBJ) $(LIBS)
 
@@ -41,6 +44,7 @@ test: $(EXES)
 	@$(PRE)pi$(EXE)
 	@$(PRE)pi_par$(EXE)
 	@$(PRE)pi_par_loop$(EXE)
+	@$(PRE)sharing$(EXE)
 	@$(PRE)utilise_cores$(EXE)
 
 clean:

@@ -11,6 +11,8 @@ This repository contains my reference examples of **OpenMP** API specification f
 [pi_par_loop.c](pi_par_loop.c) — basic usage of `parallel for` and `reduction` to parallelize the loop and aggregate
 the result. Compared to parallel approach above it keeps the code structure close to its serial version.
 
+[sharing.c](sharing.c) — `default`, `firstprivate`, `lastprivate`, `linear`, `none`, `private` and `shared` data-sharing attribute clauses examples from OpenMP documentation.
+
 [utilise_cores.c](utilise_cores.c) — example of how to properly force exactly one thread per core.
 
 ...TBA
